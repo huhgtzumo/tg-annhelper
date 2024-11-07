@@ -28,4 +28,3 @@ var/
 
 # 環境變量和配置文件
 .env
-config/config.py
