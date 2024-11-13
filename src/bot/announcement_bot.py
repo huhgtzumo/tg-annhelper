@@ -108,12 +108,19 @@ def create_group_selection_keyboard():
     """創建群組和頻道選擇鍵盤"""
     keyboard = []
     
-    # 添加群組和頻道按鈕，每個一行
+    # 只添加有效的群組按鈕
     for group_id, group_info in GROUPS.items():
-        keyboard.append([InlineKeyboardButton(f"👥 {group_info['name']}", callback_data=f"group_{group_id}")])
+        if group_info['id'] is not None:  # 只添加有 ID 的群組
+            keyboard.append([InlineKeyboardButton(f"👥 {group_info['name']}", callback_data=f"group_{group_id}")])
     
+    # 只添加有效的頻道按鈕
     for channel_id, channel_info in CHANNELS.items():
-        keyboard.append([InlineKeyboardButton(f"📢 {channel_info['name']}", callback_data=f"channel_{channel_id}")])
+        if channel_info['id'] is not None:  # 只添加有 ID 的頻道
+            keyboard.append([InlineKeyboardButton(f"📢 {channel_info['name']}", callback_data=f"channel_{channel_id}")])
+    
+    # 如果沒有任何有效的群組或頻道，顯示提示信息
+    if not keyboard:
+        return None
     
     # 添加取消按鈕
     keyboard.append([InlineKeyboardButton("❌ 取消操作", callback_data="cancel")])

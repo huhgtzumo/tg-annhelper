@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: tg_ann_bot
+    restart: unless-stopped
+    volumes:
+      - .env:/app/.env
+    environment:
+      - TZ=Asia/Taipei 
